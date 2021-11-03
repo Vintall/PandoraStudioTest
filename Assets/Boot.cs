@@ -76,24 +76,57 @@ public class Boot : MonoBehaviour
             for (int j = 2; j <= 4; j++)
                 triangles.Add(i - j);
         }
+        vert_count = done_vertices.Count / 2;
+        for (int i = 2; i < vert_count; i += 2)
+        {
+            triangles.Add(i - 2);
+            triangles.Add(i);
+            triangles.Add(vert_count + i - 2);
+            triangles.Add(vert_count + i);
+            triangles.Add(vert_count + i - 2);
+            triangles.Add(i);
+        }
+        for (int i = 3; i < vert_count; i += 2)
+        {
+            triangles.Add(vert_count + i - 2);
+            triangles.Add(i);
+            triangles.Add(i - 2);
+            triangles.Add(i);
+            triangles.Add(vert_count + i - 2);
+            triangles.Add(vert_count + i);
+        }
+        triangles.Add(vert_count);
+        triangles.Add(vert_count + 1);
+        triangles.Add(0);
+        triangles.Add(1);
+        triangles.Add(0);
+        triangles.Add(vert_count + 1);
+
+        triangles.Add(vert_count - 2);
+        triangles.Add(vert_count - 1);
+        triangles.Add(vert_count * 2 - 1);
+        triangles.Add(vert_count * 2 - 1);
+        triangles.Add(vert_count * 2 - 2);
+        triangles.Add(vert_count - 2);
 
         mesh.vertices = done_vertices.ToArray();
         mesh.SetTriangles(triangles.ToArray(), 0);
         mesh.SetNormals(done_normals);
         mesh.SetTriangles(triangles.ToArray(), 0);
+
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    if (mesh == null || mesh.vertexCount == 0)
-    //        return;
+    private void OnDrawGizmos()
+    {
+        if (mesh == null || mesh.vertexCount == 0)
+            return;
 
-    //    Gizmos.color = Color.red;
-    //    for (int i = 0; i < mesh.vertices.Length; i++)
-    //    {
-    //        Gizmos.DrawSphere(mesh.vertices[i], 0.5f);
-    //    }
-    //}
+        Gizmos.color = Color.red;
+        for (int i = 0; i < mesh.vertices.Length; i++)
+        {
+            Gizmos.DrawSphere(mesh.vertices[i], 0.5f);
+        }
+    }
     void Start()
     {
         mesh = new Mesh();
